@@ -1,0 +1,202 @@
+version: '3.7'
+
+services:
+  mongo:
+    image: mongo:4.2.3
+    volumes:
+      - $PWD/data/mongo:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: pass
+    labels:
+      traefik.enable: 'false'
+  backup-mongo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - $PWD/data/backups/mongo:/data
+    depends_on:
+      - mongo
+      - mail
+      - s3
+    secrets:
+      - PASS
+      - S3_ACCESS_KEY
+      - S3_SECRET_KEY
+    environment:
+      DRIVER: mongo
+      CRON_TIME: "* * * * *"
+      RUN_ON_START: 'true'
+      RUN_ON_START_DELAY: 10
+
+      DB: test
+      HOST: mongo
+      PORT: 27017
+      USER: user
+      PASS_FILE: /run/secrets/PASS
+      EXTRA_OPTS: '--authenticationDatabase=admin'
+
+      S3_ACCESS_KEY_FILE: /run/secrets/S3_ACCESS_KEY
+      S3_SECRET_KEY_FILE: /run/secrets/S3_SECRET_KEY
+      S3_HOST_BASE: s3:9000
+      S3_HOST_BUCKET: s3:9000
+      S3_PATH: s3://backup/mongo/
+      S3_USE_HTTPS: 'False'
+      S3_OPS: --delete-removed
+
+      ALERT: mail
+      ALERT_NAME: Backup Mongo
+      ALERT_IF_THE_SIZE_OF_LAST_BACKUP_GREATER_THAN: 10
+      ALERT_IF_THE_BACKUP_SIZE_IS_SMALLER_THAN: 100
+      MAIL_HOST: mail
+      MAIL_FROM: from@mail.com
+      MAIL_TO: to@mail.com
+
+      ROTATE_MINUTELY: 2
+      ROTATE_HOURLY: 5
+      ROTATE_DAILY: 4
+      ROTATE_WEEKLY: 2
+      ROTATE_MONTHLY: 12
+      ROTATE_YEARLY: 2
+
+
+  redis:
+    image: redis:5.0.7-alpine
+    command: --requirepass pass
+    volumes:
+      - $PWD/data/redis:/data
+  backup-redis:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - $PWD/data/backups/redis:/data
+    depends_on:
+      - redis
+      - mail
+      - s3
+    environment:
+      DRIVER: redis
+      CRON_TIME: "* * * * *"
+      RUN_ON_START: 'true'
+      RUN_ON_START_DELAY: 10
+
+      HOST: redis
+      PASS: pass
+      PORT: 6379
+
+      S3_ACCESS_KEY: s3_key
+      S3_SECRET_KEY: s3_secret
+      S3_HOST_BASE: s3:9000
+      S3_HOST_BUCKET: s3:9000
+      S3_PATH: s3://backup/redis/
+      S3_USE_HTTPS: 'False'
+      S3_OPS: --delete-removed
+
+      ALERT: mail
+      ALERT_NAME: Backup Redis
+      ALERT_IF_THE_SIZE_OF_LAST_BACKUP_GREATER_THAN: 10
+      ALERT_IF_THE_BACKUP_SIZE_IS_SMALLER_THAN: 100
+      MAIL_HOST: mail
+      MAIL_FROM: from@mail.com
+      MAIL_TO: to@mail.com
+
+      ROTATE_MINUTELY: 2
+      ROTATE_HOURLY: 5
+      ROTATE_DAILY: 4
+      ROTATE_WEEKLY: 2
+      ROTATE_MONTHLY: 12
+      ROTATE_YEARLY: 2
+
+
+  mysql:
+    image: mariadb:10
+    volumes:
+      - $PWD/data/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+  backup-mysql:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - $PWD/data/backups/mysql:/data
+    depends_on:
+      - mysql
+      - mail
+      - s3
+    environment:
+      DRIVER: mysql
+      CRON_TIME: "* * * * *"
+      RUN_ON_START: 'true'
+      RUN_ON_START_DELAY: 10
+
+      DB: test
+      HOST: mysql
+      PORT: 3306
+      USER: user
+      PASS: pass
+
+      S3_ACCESS_KEY: s3_key
+      S3_SECRET_KEY: s3_secret
+      S3_HOST_BASE: s3:9000
+      S3_HOST_BUCKET: s3:9000
+      S3_PATH: s3://backup/mysql/
+      S3_USE_HTTPS: 'False'
+      S3_OPS: --delete-removed
+
+      ALERT: mail
+      ALERT_NAME: Backup Mysql
+      ALERT_IF_THE_SIZE_OF_LAST_BACKUP_GREATER_THAN: 10
+      ALERT_IF_THE_BACKUP_SIZE_IS_SMALLER_THAN: 100
+      MAIL_HOST: mail
+      MAIL_FROM: from@mail.com
+      MAIL_TO: to@mail.com
+
+      ROTATE_MINUTELY: 2
+      ROTATE_HOURLY: 5
+      ROTATE_DAILY: 4
+      ROTATE_WEEKLY: 2
+      ROTATE_MONTHLY: 12
+      ROTATE_YEARLY: 2
+
+  mail:
+    image: djfarrelly/maildev
+    ports:
+      - 8042:80
+
+  s3:
+    image: minio/minio
+    command: ['server', '/data']
+    environment:
+      MINIO_ACCESS_KEY: s3_key
+      MINIO_SECRET_KEY: s3_secret
+    volumes:
+      - "./data/s3:/data"
+    ports:
+      - 9000:9000
+
+  s3createbuckets:
+    image: minio/mc
+    depends_on:
+      - s3
+    entrypoint: >
+      /bin/sh -c "
+      sleep 10;
+      /usr/bin/mc config host add myminio http://s3:9000/ s3_key s3_secret;
+      /usr/bin/mc mb myminio/backup;
+      /usr/bin/mc policy set download myminio/backup;
+      exit 0;
+      "
+
+secrets:
+  PASS:
+    file: ./secrets/PASS
+  S3_ACCESS_KEY:
+    file: ./secrets/S3_ACCESS_KEY
+  S3_SECRET_KEY:
+    file: ./secrets/S3_SECRET_KEY
