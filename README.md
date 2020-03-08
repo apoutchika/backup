@@ -43,7 +43,7 @@ Environments variables
 
 ### Cron
 
-- `CRON_TIME`: (OPTIONNAL) Cron schedule, default is '0 0 * * *'
+- `CRON_TIME`: (OPTIONNAL) Cron schedule, default is `0 0 * * *`
 - `RUN_ON_START`: (OPTIONNAL) Run first backup when container start if this env is defined
 - `RUN_ON_START_DELAY`: (OPTIONNAL) Delay in seconds if run on start is set. Default is `20`
 
