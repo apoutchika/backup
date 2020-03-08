@@ -29,7 +29,7 @@ You can mount the directory `/data`. The directory contains 2 subdirectories :
 Docker Secret
 -------------
 
-All variables can used with docker secrets, simply append `\_FILE` of the variable name, and set the secret file path. i.e. :
+All variables can used with docker secrets, simply append `_FILE` of the variable name, and set the secret file path. i.e. :
 
 - `PASS_FILE` and set to `/run/secrets/PASS`
 
