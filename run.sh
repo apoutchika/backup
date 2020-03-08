@@ -33,6 +33,7 @@ fi
 
 for RESTORE_FILE_PATH in \$(ls /data/restore | sort)
 do
+  RESTORE_FILE_PATH="/data/restore/\${RESTORE_FILE_PATH}"
   echo "Restore \$RESTORE_FILE_PATH"
   ${DRIVER_RESTORE_CMD}
   rm \${RESTORE_FILE_PATH}
