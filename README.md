@@ -115,7 +115,7 @@ Availables transports :
 - `ALERT`: value must be `mail`
 - `MAIL_FROM`: expeditor@domain.com
 - `MAIL_HOST`: smtp.host.com
-- `MAIL_PASSWORD`: passmail
+- `MAIL_PASS`: mail password
 - `MAIL_TO`: my@email.com
 - `MAIL_USER`: usermail
 
