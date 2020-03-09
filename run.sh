@@ -5,7 +5,7 @@
 
 # Verify if driver is valid
 if [[ -z ${BACKUP_DRIVER+x} || ! "${BACKUP_DRIVER}" =~ ^redis|mysql|mongo$ ]]; then
-  echo "Must use DRIVER environment (redis, mysql or mongo)"
+  echo "Must set BACKUP_DRIVER environment (redis, mysql or mongo)"
   exit 1
 fi
 
