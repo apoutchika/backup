@@ -1,6 +1,6 @@
 FROM debian:buster-slim
 
-ENV BACKUP_CRON_TIME '*/2 * * * *'
+ENV BACKUP_CRON_TIME '0 * * * *'
 ENV BACKUP_S3_REGION us-west-1
 ENV BACKUP_S3_USE_HTTPS True
 ENV BACKUP_NAME_FORMAT '+%Y-%m-%d.%Hh%M.%S'
