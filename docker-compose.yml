@@ -21,44 +21,44 @@ services:
       - mail
       - s3
     secrets:
-      - PASS
-      - S3_ACCESS_KEY
-      - S3_SECRET_KEY
+      - BACKUP_PASS
+      - BACKUP_S3_ACCESS_KEY
+      - BACKUP_S3_SECRET_KEY
     environment:
-      DRIVER: mongo
-      CRON_TIME: "* * * * *"
-      RUN_ON_START: 'true'
-      RUN_ON_START_DELAY: 10
+      BACKUP_DRIVER: mongo
+      BACKUP_CRON_TIME: "* * * * *"
+      BACKUP_RUN_ON_START: 'true'
+      BACKUP_RUN_ON_START_DELAY: 10
 
-      DB: test
-      HOST: mongo
-      PORT: 27017
-      USER: user
-      PASS_FILE: /run/secrets/PASS
-      EXTRA_OPTS: '--authenticationDatabase=admin'
+      BACKUP_DB: test
+      BACKUP_HOST: mongo
+      BACKUP_PORT: 27017
+      BACKUP_USER: user
+      BACKUP_PASS_FILE: /run/secrets/BACKUP_PASS
+      BACKUP_EXTRA_OPTS: '--authenticationDatabase=admin'
 
-      S3_ACCESS_KEY_FILE: /run/secrets/S3_ACCESS_KEY
-      S3_SECRET_KEY_FILE: /run/secrets/S3_SECRET_KEY
-      S3_HOST_BASE: s3:9000
-      S3_HOST_BUCKET: s3:9000
-      S3_PATH: s3://backup/mongo/
-      S3_USE_HTTPS: 'False'
-      S3_OPS: --delete-removed
+      BACKUP_S3_ACCESS_KEY_FILE: /run/secrets/BACKUP_S3_ACCESS_KEY
+      BACKUP_S3_SECRET_KEY_FILE: /run/secrets/BACKUP_S3_SECRET_KEY
+      BACKUP_S3_HOST_BASE: s3:9000
+      BACKUP_S3_HOST_BUCKET: s3:9000
+      BACKUP_S3_PATH: s3://backup/mongo/
+      BACKUP_S3_USE_HTTPS: 'False'
+      BACKUP_S3_OPS: --delete-removed
 
-      ALERT: mail
-      ALERT_NAME: Backup Mongo
-      ALERT_IF_THE_SIZE_OF_LAST_BACKUP_GREATER_THAN: 10
-      ALERT_IF_THE_BACKUP_SIZE_IS_SMALLER_THAN: 100
-      MAIL_HOST: mail
-      MAIL_FROM: from@mail.com
-      MAIL_TO: to@mail.com
+      BACKUP_ALERT: mail
+      BACKUP_ALERT_NAME: Backup Mongo
+      BACKUP_ALERT_IF_THE_SIZE_OF_LAST_BACKUP_GREATER_THAN: 10
+      BACKUP_ALERT_IF_THE_BACKUP_SIZE_IS_SMALLER_THAN: 100
+      BACKUP_MAIL_HOST: mail
+      BACKUP_MAIL_FROM: from@mail.com
+      BACKUP_MAIL_TO: to@mail.com
 
-      ROTATE_MINUTELY: 2
-      ROTATE_HOURLY: 5
-      ROTATE_DAILY: 4
-      ROTATE_WEEKLY: 2
-      ROTATE_MONTHLY: 12
-      ROTATE_YEARLY: 2
+      BACKUP_ROTATE_MINUTELY: 2
+      BACKUP_ROTATE_HOURLY: 5
+      BACKUP_ROTATE_DAILY: 4
+      BACKUP_ROTATE_WEEKLY: 2
+      BACKUP_ROTATE_MONTHLY: 12
+      BACKUP_ROTATE_YEARLY: 2
 
 
   redis:
@@ -77,37 +77,37 @@ services:
       - mail
       - s3
     environment:
-      DRIVER: redis
-      CRON_TIME: "* * * * *"
-      RUN_ON_START: 'true'
-      RUN_ON_START_DELAY: 10
+      BACKUP_DRIVER: redis
+      BACKUP_CRON_TIME: "* * * * *"
+      BACKUP_RUN_ON_START: 'true'
+      BACKUP_RUN_ON_START_DELAY: 10
 
-      HOST: redis
-      PASS: pass
-      PORT: 6379
+      BACKUP_HOST: redis
+      BACKUP_PASS: pass
+      BACKUP_PORT: 6379
 
-      S3_ACCESS_KEY: s3_key
-      S3_SECRET_KEY: s3_secret
-      S3_HOST_BASE: s3:9000
-      S3_HOST_BUCKET: s3:9000
-      S3_PATH: s3://backup/redis/
-      S3_USE_HTTPS: 'False'
-      S3_OPS: --delete-removed
+      BACKUP_S3_ACCESS_KEY: s3_key
+      BACKUP_S3_SECRET_KEY: s3_secret
+      BACKUP_S3_HOST_BASE: s3:9000
+      BACKUP_S3_HOST_BUCKET: s3:9000
+      BACKUP_S3_PATH: s3://backup/redis/
+      BACKUP_S3_USE_HTTPS: 'False'
+      BACKUP_S3_OPS: --delete-removed
 
-      ALERT: mail
-      ALERT_NAME: Backup Redis
-      ALERT_IF_THE_SIZE_OF_LAST_BACKUP_GREATER_THAN: 10
-      ALERT_IF_THE_BACKUP_SIZE_IS_SMALLER_THAN: 100
-      MAIL_HOST: mail
-      MAIL_FROM: from@mail.com
-      MAIL_TO: to@mail.com
+      BACKUP_ALERT: mail
+      BACKUP_ALERT_NAME: Backup Redis
+      BACKUP_ALERT_IF_THE_SIZE_OF_LAST_BACKUP_GREATER_THAN: 10
+      BACKUP_ALERT_IF_THE_BACKUP_SIZE_IS_SMALLER_THAN: 100
+      BACKUP_MAIL_HOST: mail
+      BACKUP_MAIL_FROM: from@mail.com
+      BACKUP_MAIL_TO: to@mail.com
 
-      ROTATE_MINUTELY: 2
-      ROTATE_HOURLY: 5
-      ROTATE_DAILY: 4
-      ROTATE_WEEKLY: 2
-      ROTATE_MONTHLY: 12
-      ROTATE_YEARLY: 2
+      BACKUP_ROTATE_MINUTELY: 2
+      BACKUP_ROTATE_HOURLY: 5
+      BACKUP_ROTATE_DAILY: 4
+      BACKUP_ROTATE_WEEKLY: 2
+      BACKUP_ROTATE_MONTHLY: 12
+      BACKUP_ROTATE_YEARLY: 2
 
 
   mysql:
@@ -130,39 +130,39 @@ services:
       - mail
       - s3
     environment:
-      DRIVER: mysql
-      CRON_TIME: "* * * * *"
-      RUN_ON_START: 'true'
-      RUN_ON_START_DELAY: 10
+      BACKUP_DRIVER: mysql
+      BACKUP_CRON_TIME: "* * * * *"
+      BACKUP_RUN_ON_START: 'true'
+      BACKUP_RUN_ON_START_DELAY: 10
 
-      DB: test
-      HOST: mysql
-      PORT: 3306
-      USER: user
-      PASS: pass
+      BACKUP_DB: test
+      BACKUP_HOST: mysql
+      BACKUP_PORT: 3306
+      BACKUP_USER: user
+      BACKUP_PASS: pass
 
-      S3_ACCESS_KEY: s3_key
-      S3_SECRET_KEY: s3_secret
-      S3_HOST_BASE: s3:9000
-      S3_HOST_BUCKET: s3:9000
-      S3_PATH: s3://backup/mysql/
-      S3_USE_HTTPS: 'False'
-      S3_OPS: --delete-removed
+      BACKUP_S3_ACCESS_KEY: s3_key
+      BACKUP_S3_SECRET_KEY: s3_secret
+      BACKUP_S3_HOST_BASE: s3:9000
+      BACKUP_S3_HOST_BUCKET: s3:9000
+      BACKUP_S3_PATH: s3://backup/mysql/
+      BACKUP_S3_USE_HTTPS: 'False'
+      BACKUP_S3_OPS: --delete-removed
 
-      ALERT: mail
-      ALERT_NAME: Backup Mysql
-      ALERT_IF_THE_SIZE_OF_LAST_BACKUP_GREATER_THAN: 10
-      ALERT_IF_THE_BACKUP_SIZE_IS_SMALLER_THAN: 100
-      MAIL_HOST: mail
-      MAIL_FROM: from@mail.com
-      MAIL_TO: to@mail.com
+      BACKUP_ALERT: mail
+      BACKUP_ALERT_NAME: Backup Mysql
+      BACKUP_ALERT_IF_THE_SIZE_OF_LAST_BACKUP_GREATER_THAN: 10
+      BACKUP_ALERT_IF_THE_BACKUP_SIZE_IS_SMALLER_THAN: 100
+      BACKUP_MAIL_HOST: mail
+      BACKUP_MAIL_FROM: from@mail.com
+      BACKUP_MAIL_TO: to@mail.com
 
-      ROTATE_MINUTELY: 2
-      ROTATE_HOURLY: 5
-      ROTATE_DAILY: 4
-      ROTATE_WEEKLY: 2
-      ROTATE_MONTHLY: 12
-      ROTATE_YEARLY: 2
+      BACKUP_ROTATE_MINUTELY: 2
+      BACKUP_ROTATE_HOURLY: 5
+      BACKUP_ROTATE_DAILY: 4
+      BACKUP_ROTATE_WEEKLY: 2
+      BACKUP_ROTATE_MONTHLY: 12
+      BACKUP_ROTATE_YEARLY: 2
 
   mail:
     image: djfarrelly/maildev
@@ -194,9 +194,9 @@ services:
       "
 
 secrets:
-  PASS:
-    file: ./secrets/PASS
-  S3_ACCESS_KEY:
-    file: ./secrets/S3_ACCESS_KEY
-  S3_SECRET_KEY:
-    file: ./secrets/S3_SECRET_KEY
+  BACKUP_PASS:
+    file: ./secrets/BACKUP_PASS
+  BACKUP_S3_ACCESS_KEY:
+    file: ./secrets/BACKUP_S3_ACCESS_KEY
+  BACKUP_S3_SECRET_KEY:
+    file: ./secrets/BACKUP_S3_SECRET_KEY

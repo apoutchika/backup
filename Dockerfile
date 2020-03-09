@@ -1,10 +1,10 @@
 FROM debian:buster-slim
 
-ENV CRON_TIME '*/2 * * * *'
-ENV S3_REGION us-west-1
-ENV S3_USE_HTTPS True
-ENV NAME_FORMAT '+%Y-%m-%d.%Hh%M.%S'
-ENV RUN_ON_START_DELAY 20
+ENV BACKUP_CRON_TIME '*/2 * * * *'
+ENV BACKUP_S3_REGION us-west-1
+ENV BACKUP_S3_USE_HTTPS True
+ENV BACKUP_NAME_FORMAT '+%Y-%m-%d.%Hh%M.%S'
+ENV BACKUP_RUN_ON_START_DELAY 20
 
 RUN apt-get update
 RUN apt-get install -y cron wget gnupg redis default-mysql-client python-pip swaks curl

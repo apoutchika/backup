@@ -31,7 +31,7 @@ Docker Secret
 
 All variables can used with docker secrets, simply append `_FILE` of the variable name, and set the secret file path. i.e. :
 
-- `PASS_FILE` and set to `/run/secrets/PASS`
+- `BACKUP_PASS_FILE` and set to `/run/secrets/BACKUP_PASS`
 
 
 Environments variables
@@ -39,43 +39,43 @@ Environments variables
 
 ### File
 
-- `NAME_FORMAT`: (OPTIONNAL) Name format of backup (without extension). It use [date](https://manpages.debian.org/buster/coreutils/date.1.en.html) format. Default is `+%Y-%m-%d.%Hh%M.%S`
+- `BACKUP_NAME_FORMAT`: (OPTIONNAL) Name format of backup (without extension). It use [date](https://manpages.debian.org/buster/coreutils/date.1.en.html) format. Default is `+%Y-%m-%d.%Hh%M.%S`
 
 ### Cron
 
-- `CRON_TIME`: (OPTIONNAL) Cron schedule, default is `0 0 * * *`
-- `RUN_ON_START`: (OPTIONNAL) Run first backup when container start if this env is defined
-- `RUN_ON_START_DELAY`: (OPTIONNAL) Delay in seconds if run on start is set. Default is `20`
+- `BACKUP_CRON_TIME`: (OPTIONNAL) Cron schedule, default is `0 0 * * *`
+- `BACKUP_RUN_ON_START`: (OPTIONNAL) Run first backup when container start if this env is defined
+- `BACKUP_RUN_ON_START_DELAY`: (OPTIONNAL) Delay in seconds if run on start is set. Default is `20`
 
 ### Database (One of them required)
 
 #### MongoDB
 
-- `DRIVER`: Backup type, must be `mongo`
-- `HOST`: Mongo host
-- `PORT`: Mongo port
-- `USER`: Mongo username
-- `PASS`: Mongo password
-- `DB`: Mongo database
-- `EXTRA_OPTS`: Extra options
+- `BACKUP_DRIVER`: Backup type, must be `mongo`
+- `BACKUP_HOST`: Mongo host
+- `BACKUP_PORT`: Mongo port
+- `BACKUP_USER`: Mongo username
+- `BACKUP_PASS`: Mongo password
+- `BACKUP_DB`: Mongo database
+- `BACKUP_EXTRA_OPTS`: Extra options
 
 #### MySQL
 
-- `DRIVER`: Backup type, must be `mysql`
-- `HOST`: MySQL host
-- `PORT`: MySQL port
-- `USER`: MySQL username
-- `PASS`: MySQL password
-- `DB`: MySQL database (optionnal)
-- `EXTRA_OPTS`: Extra options (you can use `--all-databases`)
+- `BACKUP_DRIVER`: Backup type, must be `mysql`
+- `BACKUP_HOST`: MySQL host
+- `BACKUP_PORT`: MySQL port
+- `BACKUP_USER`: MySQL username
+- `BACKUP_PASS`: MySQL password
+- `BACKUP_DB`: MySQL database (optionnal)
+- `BACKUP_EXTRA_OPTS`: Extra options (you can use `--all-databases`)
 
 #### Redis
 
-- `DRIVER`: Backup type, must be `redis`
-- `HOST`: Redis host
-- `PORT`: Redis port
-- `PASS`: Redis password
-- `EXTRA_OPTS`: Extra options
+- `BACKUP_DRIVER`: Backup type, must be `redis`
+- `BACKUP_HOST`: Redis host
+- `BACKUP_PORT`: Redis port
+- `BACKUP_PASS`: Redis password
+- `BACKUP_EXTRA_OPTS`: Extra options
 
 #### Other database
 
@@ -86,50 +86,50 @@ You can contribute ;)
 
 See [rotate-backups](https://rotate-backups.readthedocs.io/en/latest/) for more details
 
-- `ROTATE_MINUTELY`: Number
-- `ROTATE_HOURLY`: Number
-- `ROTATE_DAILY`: Number
-- `ROTATE_WEEKLY`: Number
-- `ROTATE_MONTHLY`: Number
-- `ROTATE_YEARLY`: Number
-- `ROTATE_OPTS`: Add more options
+- `BACKUP_ROTATE_MINUTELY`: Number
+- `BACKUP_ROTATE_HOURLY`: Number
+- `BACKUP_ROTATE_DAILY`: Number
+- `BACKUP_ROTATE_WEEKLY`: Number
+- `BACKUP_ROTATE_MONTHLY`: Number
+- `BACKUP_ROTATE_YEARLY`: Number
+- `BACKUP_ROTATE_OPTS`: Add more options
 
 
 ### Alert (Optionnal)
 
 Send alert if backup file is not created, the size of last backup is greater a value or backup size is less a value.
 
-- `ALERT_NAME`: Name of backup, i.e. : `My project - Mongo Backup`
-- `ALERT_IF_THE_SIZE_OF_LAST_BACKUP_GREATER_THAN`: Alert from diff size with last backup is lower. See [numfmt format](https://manpages.debian.org/buster/coreutils/numfmt.1.en.html). Default no alert
-- `ALERT_IF_THE_BACKUP_SIZE_IS_SMALLER_THAN`: If the size of backup is smaller of this value. See [numfmt format](https://manpages.debian.org/buster/coreutils/numfmt.1.en.html). Default no alert.
+- `BACKUP_ALERT_NAME`: Name of backup, i.e. : `My project - Mongo Backup`
+- `BACKUP_ALERT_IF_THE_SIZE_OF_LAST_BACKUP_GREATER_THAN`: Alert from diff size with last backup is lower. See [numfmt format](https://manpages.debian.org/buster/coreutils/numfmt.1.en.html). Default no alert
+- `BACKUP_ALERT_IF_THE_BACKUP_SIZE_IS_SMALLER_THAN`: If the size of backup is smaller of this value. See [numfmt format](https://manpages.debian.org/buster/coreutils/numfmt.1.en.html). Default no alert.
 
 Availables transports :
 
 #### Slack
 
-- `ALERT`: value must be `slack`
-- `SLACK_WEBHOOK_URL`: i.e `https://hooks.slack.com/services/XXX/YYYY/ZZZZ`
+- `BACKUP_ALERT`: value must be `slack`
+- `BACKUP_SLACK_WEBHOOK_URL`: i.e `https://hooks.slack.com/services/XXX/YYYY/ZZZZ`
 
 #### Mail
 
-- `ALERT`: value must be `mail`
-- `MAIL_FROM`: expeditor@domain.com
-- `MAIL_HOST`: smtp.host.com
-- `MAIL_PASS`: mail password
-- `MAIL_TO`: my@email.com
-- `MAIL_USER`: usermail
+- `BACKUP_ALERT`: value must be `mail`
+- `BACKUP_MAIL_FROM`: expeditor@domain.com
+- `BACKUP_MAIL_HOST`: smtp.host.com
+- `BACKUP_MAIL_PASS`: mail password
+- `BACKUP_MAIL_TO`: my@email.com
+- `BACKUP_MAIL_USER`: usermail
 
 
 ### Sync to S3 (Optionnal)
 
-- `S3_ACCESS_KEY`
-- `S3_HOST_BASE`
-- `S3_HOST_BUCKET`
-- `S3_OPS`: Additional options, you can (*should?*) use `--delete-removed`
-- `S3_PATH`: i.e.: `s3://mys3/my-projet-mongo-backup/`
-- `S3_REGION`: default `us-west-1`
-- `S3_SECRET_KEY`
-- `S3_USE_HTTPS`: default `True`
+- `BACKUP_S3_ACCESS_KEY`
+- `BACKUP_S3_HOST_BASE`
+- `BACKUP_S3_HOST_BUCKET`
+- `BACKUP_S3_OPS`: Additional options, you can (*should?*) use `--delete-removed`
+- `BACKUP_S3_PATH`: i.e.: `s3://mys3/my-projet-mongo-backup/`
+- `BACKUP_S3_REGION`: default `us-west-1`
+- `BACKUP_S3_SECRET_KEY`
+- `BACKUP_S3_USE_HTTPS`: default `True`
 
 
 Restore a backup

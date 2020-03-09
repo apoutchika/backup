@@ -8,10 +8,10 @@ DRIVER_FILE_PATH="/data/backup/\${DATE}.${DRIVER_EXTENSION}"
 
 # Create you'r logic for generate backup and restore command
 REDIS_OPTS=""
-if [[ ! -z ${HOST+x} ]]; then REDIS_OPTS="${REDIS_OPTS} -h ${HOST}"; fi
-if [[ ! -z ${PORT+x} ]]; then REDIS_OPTS="${REDIS_OPTS} -p ${PORT}"; fi
-if [[ ! -z ${PASS+x} ]]; then REDIS_OPTS="${REDIS_OPTS} -a ${PASS}"; fi
-if [[ ! -z ${EXTRA_OPTS+x} ]]; then REDIS_OPTS="${REDIS_OPTS} ${EXTRA_OPTS}"; fi
+if [[ ! -z ${BACKUP_HOST+x} ]]; then REDIS_OPTS="${REDIS_OPTS} -h ${BACKUP_HOST}"; fi
+if [[ ! -z ${BACKUP_PORT+x} ]]; then REDIS_OPTS="${REDIS_OPTS} -p ${BACKUP_PORT}"; fi
+if [[ ! -z ${BACKUP_PASS+x} ]]; then REDIS_OPTS="${REDIS_OPTS} -a ${BACKUP_PASS}"; fi
+if [[ ! -z ${BACKUP_EXTRA_OPTS+x} ]]; then REDIS_OPTS="${REDIS_OPTS} ${BACKUP_EXTRA_OPTS}"; fi
 
 # export driver backup command
 DRIVER_BACKUP_CMD="redis-cli ${REDIS_OPTS} --rdb /tmp/dump.rdb && tar -C /tmp -zcvf ${DRIVER_FILE_PATH} dump.rdb && rm /tmp/dump.rdb"
