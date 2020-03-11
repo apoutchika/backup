@@ -9,7 +9,7 @@ if [[ ${BACKUP_ALERT} == 'mail' ]]; then
   if [[ ! -z ${BACKUP_MAIL_TO+x} ]]; then ALERT_CMD="${ALERT_CMD} --to ${BACKUP_MAIL_TO}"; fi
   if [[ ! -z ${BACKUP_MAIL_HOST+x} ]]; then ALERT_CMD="${ALERT_CMD} --server ${BACKUP_MAIL_HOST}"; fi
   if [[ ! -z ${BACKUP_MAIL_FROM+x} ]]; then ALERT_CMD="${ALERT_CMD} --from ${BACKUP_MAIL_FROM}"; fi
-  if [[ ! -z ${BACKUP_MAIL_USER+x} || ${MAIL_PASS+x} ]]; then ALERT_CMD="${BACKUP_ALERT_CMD} --auth LOGIN"; fi
+  if [[ ! -z ${BACKUP_MAIL_USER+x} || ${MAIL_PASS+x} ]]; then ALERT_CMD="${ALERT_CMD} --auth LOGIN"; fi
   if [[ ! -z ${BACKUP_MAIL_USER+x} ]]; then ALERT_CMD="${ALERT_CMD} --auth-user ${BACKUP_MAIL_USER}"; fi
   if [[ ! -z ${BACKUP_MAIL_PASS+x} ]]; then ALERT_CMD="${ALERT_CMD} --auth-password ${BACKUP_MAIL_PASS}"; fi
   ALERT_CMD="${ALERT_CMD} --silent -h-Subject: \"[${ALERT_NAME}] Error Backup\" --body \"\${1}\""
