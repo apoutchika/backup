@@ -76,7 +76,8 @@ fi
 
 # Create crontab for backup and restore function
 cat <<EOF > /crontab.conf
-$(env)
+$(env | grep BACKUP_)
+PATH=${PATH}
 ${BACKUP_CRON_TIME} /backup.sh > /proc/1/fd/1 2>&1
 * * * * * /restore.sh > /proc/1/fd/1 2>&1
 # Add empty line
