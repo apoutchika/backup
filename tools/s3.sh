@@ -12,5 +12,5 @@ use_https = ${BACKUP_S3_USE_HTTPS}
 access_key = ${BACKUP_S3_ACCESS_KEY}
 secret_key = ${BACKUP_S3_SECRET_KEY}
 EOF
-  S3_CMD="s3cmd sync ${S3_OPS} /data/backup/ ${BACKUP_S3_PATH}"
+  S3_CMD="s3cmd sync ${BACKUP_S3_OPS} /data/backup/ ${BACKUP_S3_PATH}"
 fi
