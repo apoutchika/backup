@@ -37,9 +37,10 @@ if [[ ! -z \${BACKUP_ALERT_IF_THE_SIZE_OF_LAST_BACKUP_GREATER_THAN+x} ]]; then
   if [[ "\$(echo \${LAST} | wc -l)" == "1" ]]; then
     LAST_SIZE=\$(stat -c %s /data/backup/\${LAST})
     NEW_SIZE_WITH_DIFF=\$(expr \${NEW_SIZE} + ${DIFF})
+    DIFF=\$(expr \${LAST_SIZE} - \${NEW_SIZE})
 
     if [[ \${NEW_SIZE_WITH_DIFF} -lt \${LAST_SIZE} ]]; then
-      sendAlert "[${BACKUP_ALERT_NAME}] Backup size changed from \$(numfmt --to=si \${LAST_SIZE}) to \$(numfmt --to=si \${NEW_SIZE})"
+      sendAlert "[${BACKUP_ALERT_NAME}] Backup size changed from \$(numfmt --to=si \${LAST_SIZE}) to \$(numfmt --to=si \${NEW_SIZE}) (-\$(numfmt --to=si \${DIFF}))"
     fi
   fi
 fi
