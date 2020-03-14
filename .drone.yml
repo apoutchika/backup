@@ -7,7 +7,7 @@ trigger:
     - master
 
 steps:
-  - name: Build
+  - name: build
     image: appleboy/drone-ssh
     settings:
       host:
@@ -24,7 +24,7 @@ steps:
         - git pull
         - docker build -t apoutchika/backup:latest .
 
-  - name: Deploy
+  - name: deploy
     image: appleboy/drone-ssh
     settings:
       host:
@@ -38,7 +38,7 @@ steps:
       script:
         - /apps/updateBackups.sh
 
-  - name: Notify
+  - name: notify
     image: drillster/drone-email
     settings:
       host:
