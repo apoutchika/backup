@@ -8,6 +8,7 @@ trigger:
 
 steps:
   - name: notify
+    image: drillster/drone-email
     host:
       from_secret: mail_host
     port:
