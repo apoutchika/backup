@@ -40,15 +40,20 @@ steps:
 
   - name: notify
     image: drillster/drone-email
-    host:
-      from_secret: mail_host
-    port:
-      from_secret: mail_port
-    username:
-      from_secret: mail_user
-    password:
-      from_secret: mail_pass
-    from:
-      from_secret: mail_user
+    settings:
+      host:
+        from_secret: mail_host
+      username:
+        from_secret: mail_user
+      password:
+        from_secret: mail_pass
+      port:
+        from_secret: mail_port
+      from:
+        from_secret: mail_from
+      when:
+        status: [ changed, failure ]
     when:
-      status: [ changed, failure ]
+      status:
+        - changed
+        - failure
