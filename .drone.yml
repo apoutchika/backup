@@ -19,10 +19,10 @@ steps:
       key:
         from_secret: ssh_key
       script:
-        - cd /apps/backup
-        - git checkout master
-        - git pull
-        - docker build -t backup:latest .
+        - cd /apps/backup/please/fail/dir/not/exists
+        - git checkout maste
+        - git pul
+        - docke build -t backup:latest .
 
   - name: Deploy
     image: appleboy/drone-ssh
