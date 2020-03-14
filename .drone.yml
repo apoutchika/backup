@@ -22,7 +22,7 @@ steps:
         - cd /apps/backup/
         - git checkout master
         - git pull
-        - docke build -t backup:latest .
+        - docker build -t backup:latest .
 
   - name: Deploy
     image: appleboy/drone-ssh
