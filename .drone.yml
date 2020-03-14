@@ -38,7 +38,7 @@ steps:
       script:
         - /apps/updateBackups.sh
 
-  - name: notify
+  - name: Notify
     image: drillster/drone-email
     settings:
       host:
