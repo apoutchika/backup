@@ -1,0 +1,53 @@
+kind: pipeline
+type: docker
+name: deploy
+
+trigger:
+  branch:
+    - master
+
+steps:
+  - name: notify
+    host:
+      from_secret: mail_host
+    port:
+      from_secret: mail_port
+    username:
+      from_secret: mail_user
+    password:
+      from_secret: mail_pass
+    from:
+      from_secret: mail_user
+    when:
+      status: [ changed, failure ]
+
+  - name: Build
+    image: appleboy/drone-ssh
+    settings:
+      host:
+        from_secret: host
+      username:
+        from_secret: user
+      port:
+        from_secret: port
+      key:
+        from_secret: ssh_key
+      script:
+        - cd /apps/backup
+        - git checkout master
+        - git pull
+        - docker build -t backup:latest .
+
+  - name: Deploy
+    image: appleboy/drone-ssh
+    settings:
+      host:
+        from_secret: host
+      username:
+        from_secret: user
+      port:
+        from_secret: port
+      key:
+        from_secret: ssh_key
+      script:
+        - /apps/updateBackups.sh
