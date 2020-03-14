@@ -19,9 +19,9 @@ steps:
       key:
         from_secret: ssh_key
       script:
-        - cd /apps/backup/please/fail/dir/not/exists
-        - git checkout maste
-        - git pul
+        - cd /apps/backup/
+        - git checkout master
+        - git pull
         - docke build -t backup:latest .
 
   - name: Deploy
