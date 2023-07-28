@@ -74,11 +74,14 @@ if [[ ! -z ${BACKUP_RUN_ON_START+x} ]]; then
   /restore.sh > /dev/stdout 2>&1
 fi
 
+
+CLEAN_BACKUP_CRON_TIME=$(echo "$BACKUP_CRON_TIME" | sed 's/"//g')
+
 # Create crontab for backup and restore function
 cat <<EOF > /crontab.conf
 $(env | grep BACKUP_)
 PATH=${PATH}
-${BACKUP_CRON_TIME} /backup.sh > /proc/1/fd/1 2>&1
+${CLEAN_BACKUP_CRON_TIME} /backup.sh > /proc/1/fd/1 2>&1
 * * * * * /restore.sh > /proc/1/fd/1 2>&1
 # Add empty line
 EOF
