@@ -1,6 +1,8 @@
 # ChangeLog
 
-## Unreleased
+## 1.0.0 - 2023-07-29
+
+No breaking change with last versions.
 
 ### Added
 
