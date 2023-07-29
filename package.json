@@ -1,0 +1,22 @@
+{
+  "name": "backup",
+  "version": "0.2.8",
+  "description": "Universal Database Backup",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/apoutchika/backup.git"
+  },
+  "keywords": [
+    "backup",
+    "database",
+    "mysql",
+    "mongodb",
+    "redis"
+  ],
+  "author": "Apoutchika",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/apoutchika/backup/issues"
+  },
+  "homepage": "https://github.com/apoutchika/backup#readme"
+}

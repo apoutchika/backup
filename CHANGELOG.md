@@ -1,6 +1,16 @@
 # ChangeLog
 
-## 0.2.8
+## Unreleased
+
+### Added
+
+- Create package.json file, for project infos and simplify versionning with npm version.
+
+### Removed
+
+- Remove .drone.yml because is not used. Deploying manually.
+
+## 0.2.8 - 2023-07-28
 
 ### Fixed
 
