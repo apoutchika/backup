@@ -1,6 +1,6 @@
 {
   "name": "backup",
-  "version": "0.2.8",
+  "version": "1.0.0",
   "description": "Universal Database Backup",
   "repository": {
     "type": "git",
